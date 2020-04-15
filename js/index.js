@@ -21,7 +21,10 @@ setTimeout(() => {
     }
     for (let y = 0; y < numToGuess.length; y++) {
         if (numToGuess.includes(playerGuess[y])) {
-            console.log("Ti sei ricordato del numero: " + playerGuess[y]);
+            console.log(
+                "%c Ti sei ricordato del numero: " + playerGuess[y],
+                "color: green"
+            );
         }
     }
 }, 30000);
