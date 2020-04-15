@@ -28,6 +28,8 @@ setTimeout(() => {
         }
     }
 }, 30000);
+
+// Debug
 console.log(playerGuess);
 
 // Functions
