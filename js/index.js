@@ -9,15 +9,21 @@
 
 // Declaration
 var numToGuess = qUniqueRandomNums(1, 50, 5);
-numToGuess = numToGuess.sort(sortNumbers);
+numToGuess = numToGuess.sort(sortNums);
 console.log(numToGuess);
 var playerGuess = [];
+let rightGuess = [];
+// HTML display
+let cardDiv = $(".card-div");
+let timeOut = 30000;
 
 alert("I numeri da ricordare sono: " + numToGuess);
 
 setTimeout(() => {
-    for (let i = 0; i < 5; i++) {
-        playerGuess.push(parseInt(prompt("Inserisci numero")));
+    for (let i = 0; i < numToGuess.length; i++) {
+        playerGuess.push(
+            parseInt(prompt(`Inserisci il ${playerGuess.length + 1}° numero`))
+        );
     }
     for (let y = 0; y < numToGuess.length; y++) {
         if (numToGuess.includes(playerGuess[y])) {
@@ -25,9 +31,44 @@ setTimeout(() => {
                 "%c Ti sei ricordato del numero: " + playerGuess[y],
                 "color: green"
             );
+            rightGuess.push(playerGuess[y]);
         }
     }
-}, 30000);
+    // HTML Display
+    for (let x = 0; x < numToGuess.length; x++) {
+        let newCard = $(".template .card").clone();
+        newCard.append(numToGuess[x]);
+        if (playerGuess.includes(numToGuess[x])) {
+            newCard.addClass("right");
+        } else {
+            newCard.addClass("wrong");
+        }
+        cardDiv.append(newCard);
+
+        // if (playerGuess.includes(numToGuess[x])) {
+        //     cardDiv.append(
+        //         '<div class="card right" data-element="' +
+        //             x +
+        //             '">' +
+        //             numToGuess[x] +
+        //             "</div>"
+        //     );
+        // } else {
+        //     cardDiv.append(
+        //         '<div class="card wrong" data-element="' +
+        //             x +
+        //             '">' +
+        //             numToGuess[x] +
+        //             "</div>"
+        //     );
+        // }
+    }
+    cardDiv.append(
+        "<div class='result'>Hai indovinato " +
+            rightGuess.length +
+            " numeri</div>"
+    );
+}, timeOut);
 
 // Debug
 console.log(playerGuess);
@@ -53,10 +94,10 @@ function qUniqueRandomNums(min, max, q) {
 }
 
 /**
- * Sort numbers, used as array.sort(sortNumbers)
+ * Sort an array of numbers, used as array.sort(sortNums)
  * @param {int} a
  * @param {int} b
  */
-function sortNumbers(a, b) {
+function sortNums(a, b) {
     return a - b;
 }
